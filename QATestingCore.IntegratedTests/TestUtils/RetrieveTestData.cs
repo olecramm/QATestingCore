@@ -51,5 +51,22 @@ namespace QATestingCore.IntegratedTests.TestUtils
             }
             return jsonObjectData;
         }
+
+        public static object GetRequestParameters<T>(string filePath, string jsonTokenName)
+        {
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + filePath;
+            var jsonFile = string.Empty;
+
+            using (var file = File.OpenText(baseDirectory))
+            {
+                jsonFile = file.ReadToEnd();
+            }
+
+            var paramsJsonObj = JObject.Parse(jsonFile)
+                                    .SelectToken(jsonTokenName)
+                                    .ToObject<T>();
+            return paramsJsonObj;
+        }
     }
 }
+
