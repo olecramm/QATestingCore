@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
@@ -29,11 +27,11 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request. Obs.:It is considered null value when it were omitted</param>
         /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
         protected void Arrange(string baseUrl,
-                                        string resourcePath,
-                                        Method method,                                        
-                                        DataFormat dataFormat,
-                                        JObject paramsBody = null,
-                                        string token = null)
+                               string resourcePath,
+                               Method method,
+                               DataFormat dataFormat,
+                               JObject paramsBody = null,
+                               string token = null)
         {
             RestClient = new RestClient(baseUrl);
 
