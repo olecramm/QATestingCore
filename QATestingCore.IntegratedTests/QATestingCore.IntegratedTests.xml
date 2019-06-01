@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QATestingCore.IntegratedTests</name>
+    </assembly>
+    <members>
+        <member name="F:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.RestClient">
+            <summary>
+            RestClient object of RestSharp library
+            </summary>
+        </member>
+        <member name="F:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.RestRequest">
+            <summary>
+            restRequest object of RestSharp library
+            </summary>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.Arrange(System.String,System.String,RestSharp.Method,RestSharp.DataFormat,Newtonsoft.Json.Linq.JObject,System.String)">
+            <summary>
+            Arrange the request to call the endpoint
+            </summary>
+            <param name="baseUrl">Represents the host endpoint URL</param>
+            <param name="resourcePath">Represents the path of the resource inside the endpoint server</param>
+            <param name="method">Represents the http verb that the call will execute on the endpoint</param>
+            <param name="dataFormat">Represents the data type expected as response by the endipoint json or xml</param>
+            <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request. Obs.:It is considered null value when it were omitted</param>
+            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.Act">
+            <summary>
+            Execute the client synchronously to the configured endpoint with the request informations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.ActAsync">
+            <summary>
+            Execute asynchronously the client to the configured endpoint with the request informations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.AssembleBaseUrl(System.UriBuilder)">
+            <summary>
+            Assemble the Url properly to be used in the client object
+            </summary>
+            <param name="uriBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpDelRequest.MakeDeleteRequest(System.UriBuilder,RestSharp.Method,System.String)">
+            <summary>
+            Create Delete request and execute the call to an endpoint
+            </summary>
+            <param name="uriBuilder">Represents an object that contains client and request informations</param>
+            <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
+            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <returns>Return an IRestResponse object</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpGetRequest.MakeGetRequest(System.UriBuilder,RestSharp.Method,System.String)">
+            <summary>
+            Create Get request and execute the call to an endpoint
+            </summary>
+            <param name="uriBuilder">Represents an object that contains client and request informations</param>
+            <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
+            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <returns>Return an IRestResponse object</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPostRequest.MakePostRequet(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.String)">
+            <summary>
+            Create Post request and execute the call to an endpoint
+            </summary>
+            <param name="uriBuilder">Represents an object that contains client and request informations</param>
+            <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
+            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <returns>Return an IRestResponse object</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPutRequest.MakePutRequest(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.String)">
+            <summary>
+            Create PUT request and execute the call to an endpoint
+            </summary>
+            <param name="uriBuilder">Represents an object that contains client and request informations</param>
+            <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
+            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <returns>Return an IRestResponse object</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.Assertions.ResponseContentAssertions.AssertStatusCode(System.Net.HttpStatusCode,System.Net.HttpStatusCode)">
+            <summary>
+            Compare the statuscode received to the statuscode expected
+            </summary>
+            <param name="statusCode">Represents the status code got from response being validated</param>
+            <param name="expectedStatusCode">Represents the expected status code</param>
+            <returns>Returns a boolean data to be asserted</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.Authentications.JWTAuthentication.#ctor">
+            <summary>
+            Create the UriBuilder object in memory
+            </summary>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.Authentications.JWTAuthentication.GetOauthAuthentication(System.UriBuilder,Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Generate oauth token through an authentication server asynchronously
+            </summary>
+            <param name="uriBuilder">Represents an object that contains client and request informations</param>
+            <param name="paramsObj">Represents an objects with the parameters to be sent wrapped into the request</param>
+            <returns>Returns a token sent for the oauth authentication server</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetResourceAsString(System.String)">
+            <summary>
+            Read data from file json and returns data as string
+            </summary>
+            <param name="filePath">Represents the value from the parameter <see cref="!:filePath"/> where it is stowed</param>
+            <returns>Returns a string object containing the data read from json file</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetResourceAsJObject(System.String)">
+            <summary>
+            Read data from file json and returns data as Json Object
+            </summary>
+            <param name="filePath">Represents the value from the parameter <see cref="!:filePath"/> where it is stowed</param>
+            <returns>Returns a string object containing the data read from json file</returns>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetResourceAsGeneric``1(System.String)">
+            <summary>
+            Read data from file json and returns data object as Model Class
+            </summary>
+            <typeparam name="T">Represents the Model Class as type T</typeparam>
+            <param name="filePath">Represents the value from the parameter <see cref="!:filePath"/> where it is stowed</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetRequestParameters``1(System.String,System.String)" -->
+    </members>
+</doc>
