@@ -125,7 +125,7 @@ namespace XUnitTestProject.ObjectTest
             var _jwtToken = _oauthAuthentication.GetOauthAuthentication(oauthURI, paramsBody);
 
             //Act   
-            var response = _httpGetRequest.MakeGetRequest(testURI, RestSharp.Method.GET,_jwtToken);
+            var response = _httpGetRequest.MakeGetRequest(testURI, HttpMethod.GET, _jwtToken);
 
             //Assert
             var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
@@ -142,7 +142,7 @@ namespace XUnitTestProject.ObjectTest
             var expectedObj = RetrieveTestData.GetResourceAsGeneric<ParamsBodyTest>(expectBodyParams);
 
             //Act
-            var response = _httpGetRequest.MakeGetRequest(testURI, RestSharp.Method.GET);
+            var response = _httpGetRequest.MakeGetRequest(testURI, HttpMethod.GET);
 
             //Assert
             ResponseContentAssertions.AssertResponseDataObject<ParamsBodyTest>(response, expectedObj);

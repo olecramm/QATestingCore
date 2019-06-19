@@ -3,6 +3,9 @@ using System;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
 {
+    /// <summary>
+    /// Contains method to beget call to the endpoint as Http action GET
+    /// </summary>
     public class HttpGetRequest : HttpBaseRequest, IHttpGetRequest
     {
         /// <summary>
@@ -13,7 +16,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
         /// <returns>Return an IRestResponse object</returns>
         public IRestResponse MakeGetRequest(UriBuilder uriBuilder,
-                                            Method method = Method.GET,
+                                            HttpMethod method = HttpMethod.GET,
                                             string token = null)
         {
             var baseUrl = AssembleBaseUrl(uriBuilder);

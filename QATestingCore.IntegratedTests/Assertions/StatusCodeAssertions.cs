@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 
 namespace QATestingCore.IntegratedTests.Assertions
 {
+    /// <summary>
+    /// Contains methods to assert statuscode of call's responses
+    /// </summary>
     public static class StatusCodeAssertions
     {
         /// <summary>

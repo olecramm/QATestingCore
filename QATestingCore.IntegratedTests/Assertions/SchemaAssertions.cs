@@ -4,6 +4,9 @@ using RestSharp;
 
 namespace QATestingCore.IntegratedTests.Assertions
 {
+    /// <summary>
+    /// Contain method to assert json shema comparing actual object to expected object schema
+    /// </summary>
     public static class SchemaAssertions
     {
         /// <summary>

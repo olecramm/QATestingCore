@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.Authentications
 {
+    /// <summary>
+    /// Contains methods to beget token authentication as JWT security
+    /// </summary>
     public class JWTAuthentication : HttpBaseRequest, IJWTAuthentication
     {
         private UriBuilder uriBuilder;
@@ -32,7 +35,7 @@ namespace QATestingCore.IntegratedTests.Authentications
 
             Arrange(baseUrl,
                     uriBuilder.Uri.LocalPath,
-                    Method.GET,
+                    HttpMethod.GET,
                     DataFormat.Json,
                     paramsObj);
 

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
 {
+    /// <summary>
+    /// Contains methods that assembles client and request to call endpoints
+    /// </summary>
     public abstract class HttpBaseRequest
     {
         /// <summary>
@@ -22,20 +25,20 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// </summary>
         /// <param name="baseUrl">Represents the host endpoint URL</param>
         /// <param name="resourcePath">Represents the path of the resource inside the endpoint server</param>
-        /// <param name="method">Represents the http verb that the call will execute on the endpoint</param>
+        /// <param name="EnumMethod">Represents the http verb that the call will execute on the endpoint</param>
         /// <param name="dataFormat">Represents the data type expected as response by the endipoint json or xml</param>
         /// <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request. Obs.:It is considered null value when it were omitted</param>
         /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
         protected void Arrange(string baseUrl,
                                string resourcePath,
-                               Method method,
+                               HttpMethod EnumMethod,
                                DataFormat dataFormat,
                                JObject paramsBody = null,
                                string token = null)
         {
             RestClient = new RestClient(baseUrl);
 
-            RestRequest = new RestRequest(resourcePath, method, dataFormat);
+            RestRequest = new RestRequest(resourcePath, (Method)EnumMethod, dataFormat);
 
             if (paramsBody != null)
             {
