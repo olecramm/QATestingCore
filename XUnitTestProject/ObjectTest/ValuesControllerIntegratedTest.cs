@@ -5,6 +5,7 @@ using QATestingCore.IntegratedTests.TestUtils;
 using QATestingCore.IntegratedTests.Assertions;
 using System.Net;
 using QATestingCore.IntegratedTests.Authentications;
+using XUnitTestProject.Models;
 
 namespace XUnitTestProject.ObjectTest
 {
@@ -19,7 +20,9 @@ namespace XUnitTestProject.ObjectTest
         private string TestDataPath;
 
         public ValuesControllerIntegratedTest()
-        {            
+        {
+            testURI = new UriBuilder("http://localhost:3000");
+
             _httpGetRequest = new HttpGetRequest();
             _httpPostRequest = new HttpPostRequest();
             _httpPutRequest = new HttpPutRequest();
@@ -30,13 +33,11 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory(Skip = "specific reason")]
-        [InlineData("https://support.hypernode.com", "/30605678839/05?rlz=1C1SQJL_pt-BRBR809BR809&biw=1366&bih=625&tbm=isch", HttpStatusCode.OK)]
-        public void TC_01_AssertActionGETApiValuesByID_OK(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData("/30605678839/05?rlz=1C1SQJL_pt-BRBR809BR809&biw=1366&bih=625&tbm=isch", HttpStatusCode.OK)]
+        public void TC_01_AssertActionGETApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl) {
-                Path = resourcePath
-            };
+            testURI.Path = resourcePath;
 
             //Act   
             var response = _httpGetRequest.MakeGetRequest(testURI);
@@ -46,14 +47,11 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory(Skip = "specific reason")]
-        [InlineData("https://support.hypernode.com", "Api/Value", HttpStatusCode.OK)]
-        public void TC_02_AssertActionPOSTApiValuesByID_OK(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData( "/Api/Value", HttpStatusCode.OK)]
+        public void TC_02_AssertActionPOSTApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl)
-            {
-                Path = resourcePath
-            };
+            testURI.Path = resourcePath;
             
             var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
 
@@ -65,14 +63,11 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData("http://localhost:3000", "/userinformation/101", HttpStatusCode.OK)]
-        public void TC_03_AssertActionPUTApiValuesByID_OK(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData("/userinformation/101", HttpStatusCode.OK)]
+        public void TC_03_AssertActionPUTApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl)
-            {
-                Path = resourcePath
-            };
+            testURI.Path = resourcePath;
 
             var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
 
@@ -80,56 +75,46 @@ namespace XUnitTestProject.ObjectTest
             var response = _httpPutRequest.MakePutRequest(testURI, paramsBody);
 
             //Assert
-            var result = ResponseContentAssertions.AssertStatusCode(response.StatusCode, expectedResult);
+            var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
             Assert.True(result);
         }
 
         [Theory]
-        [InlineData("http://localhost:3000", "/userinformation/101", HttpStatusCode.OK)]
-        public void TC_04_AssertActionDELApiValuesByID_OK(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData( "/userinformation/101", HttpStatusCode.OK)]
+        public void TC_04_AssertActionDELApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl)
-            {
-                Path = resourcePath
-
-            };
+            testURI.Path = resourcePath;
 
             //Act   
             var response = _httpDelRequest.MakeDeleteRequest(testURI);
 
             //Assert
-            var result = ResponseContentAssertions.AssertStatusCode(response.StatusCode, expectedResult);
+            var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
             Assert.True(result);
         }
 
         [Theory]
-        [InlineData("http://localhost:3000", "/userinformation?userId=101", HttpStatusCode.OK)]
-        public void TC_05_AssertActionGETApiValuesByID_OK(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData("/userinformation?userId=101", HttpStatusCode.OK)]
+        public void TC_05_AssertActionGETApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl)
-            {
-                Path = resourcePath
-            };
+            testURI.Path = resourcePath;
 
             //Act   
             var response = _httpGetRequest.MakeGetRequest(testURI);
 
             //Assert
-            var result = ResponseContentAssertions.AssertStatusCode(response.StatusCode, expectedResult);
+            var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
             Assert.True(result);
         }
 
         [Theory]
-        [InlineData("http://localhost:3000", "/userinformation?userId=101", HttpStatusCode.OK)]
-        public void TC_06_AssertActionGETApiValuesByID_OK_WithToken(string baseUrl, string resourcePath, HttpStatusCode expectedResult)
+        [InlineData("/userinformation?userId=101", HttpStatusCode.OK)]
+        public void TC_06_AssertActionGETApiValuesByID_OK_WithToken(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI = new UriBuilder(baseUrl)
-            {
-                Path = resourcePath
-            };
+            testURI.Path = resourcePath;
 
             UriBuilder oauthURI = new UriBuilder("http://localhost:3000") {
                 Path = "/token"
@@ -143,8 +128,24 @@ namespace XUnitTestProject.ObjectTest
             var response = _httpGetRequest.MakeGetRequest(testURI, RestSharp.Method.GET,_jwtToken);
 
             //Assert
-            var result = ResponseContentAssertions.AssertStatusCode(response.StatusCode, expectedResult);
+            var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
             Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("/TestingDictionaryAssert", @"\TestsData\ExpectedTestParameters.json")]
+        public void TC_07_AssertReturnedData(string resourcePath, string expectBodyParams)
+        {
+            //Arrange
+            testURI.Path = resourcePath;
+
+            var expectedObj = RetrieveTestData.GetResourceAsGeneric<ParamsBodyTest>(expectBodyParams);
+
+            //Act
+            var response = _httpGetRequest.MakeGetRequest(testURI, RestSharp.Method.GET);
+
+            //Assert
+            ResponseContentAssertions.AssertResponseDataObject<ParamsBodyTest>(response, expectedObj);
         }
     }
 }
