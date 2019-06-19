@@ -80,6 +80,15 @@
             <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
+        <member name="M:QATestingCore.IntegratedTests.Assertions.ResponseContentAssertions.AssertResponseDataObject``1(RestSharp.IRestResponse,``0)">
+            <summary>
+            Assert the content from the response to the content expected
+            </summary>
+            <typeparam name="T">Represents a JObject of type T</typeparam>
+            <param name="response">Represents a IRestResponse object with the content to be asserted</param>
+            <param name="expectedResult">Represents a JObject of type T containing the expected parameters</param>
+            <returns></returns>
+        </member>
         <member name="M:QATestingCore.IntegratedTests.Assertions.SchemaAssertions.ValidateJsonSchema(System.String,RestSharp.IRestResponse)">
             <summary>
             Assert the json schema from the response to the json schema expected

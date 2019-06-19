@@ -11,16 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestsData\ExpectedTestParameters.json" />
     <None Remove="TestsData\ValuesControllerTestsData.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestsData\ExpectedTestParameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestsData\ValuesControllerTestsData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.7.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -29,9 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="QATestingCore.IntegratedTests">
-      <HintPath>..\..\..\QALibrary\QATestingCore.IntegratedTests.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\QATestingCore.IntegratedTests\QATestingCore.IntegratedTests.csproj" />
   </ItemGroup>
 
 </Project>

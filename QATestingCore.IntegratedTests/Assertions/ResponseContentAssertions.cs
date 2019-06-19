@@ -1,34 +1,30 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using FluentAssertions;
+using Newtonsoft.Json.Linq;
 using RestSharp;
-using System.Collections.Generic;
 
 namespace QATestingCore.IntegratedTests.Assertions
 {
-    public static class ResponseContentAssertions
+    public static class ResponseContentAssertions 
     {
-        public static bool AssertResponseData(IRestResponse response, IDictionary<string, string> expectedResult, out string resultTestMessage)
+        /// <summary>
+        /// Assert the content from the response to the content expected
+        /// </summary>
+        /// <typeparam name="T">Represents a JObject of type T</typeparam>
+        /// <param name="response">Represents a IRestResponse object with the content to be asserted</param>
+        /// <param name="expectedResult">Represents a JObject of type T containing the expected parameters</param>
+        /// <returns></returns>
+        public static bool AssertResponseDataObject<T>(IRestResponse response, T expectedResult)
         {
-            resultTestMessage = string.Empty;
+            var result = JObject.Parse(response.Content).ToObject<T>();
 
-            var responseContent = JObject.Parse(response.Content);            
-
-            foreach (KeyValuePair<string,string> item in expectedResult)
+            try
             {
-                var Key = responseContent.GetValue(item.Key);
-
-                if (responseContent.GetValue(item.Key) == null)
-                {
-                    resultTestMessage = $"Parameter {item.Key} is not present";
-
-                    return false;
-                }
-                else if (responseContent.GetValue(item.Key).Equals(item.Value))
-                {
-                    resultTestMessage = $"Parameter {item.Key} value is not equal as expected";
-
-                    return false;
-                }                
-            };
+                result.Should().BeEquivalentTo<T>(expectedResult);
+            }
+            catch (System.Exception e)
+            {
+                throw new System.Exception(e.Message);
+            }
             return true;
         }
     }
