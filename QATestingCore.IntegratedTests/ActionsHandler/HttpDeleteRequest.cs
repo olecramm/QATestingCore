@@ -3,6 +3,9 @@ using System;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
 {
+    /// <summary>
+    /// Contains method to beget call to the endpoint as Http action DEL
+    /// </summary>
     public class HttpDelRequest : HttpBaseRequest, IHttpDelRequest
     {
         /// <summary>
@@ -13,7 +16,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
         /// <returns>Return an IRestResponse object</returns>
         public IRestResponse MakeDeleteRequest(UriBuilder uriBuilder,
-                                               Method method = Method.DELETE,
+                                               HttpMethod method = HttpMethod.DELETE,
                                                string token = null)
         {
             var baseUrl = AssembleBaseUrl(uriBuilder);

@@ -4,6 +4,9 @@ using System;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
 {
+    /// <summary>
+    /// Contains method to beget call to the endpoint as Http action POST
+    /// </summary>
     public class HttpPostRequest : HttpBaseRequest, IHttpPostRequest
     {
         /// <summary>
@@ -21,7 +24,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
 
             Arrange(baseUrl,
                     uriBuilder.Uri.LocalPath,
-                    Method.POST,
+                    HttpMethod.POST,
                     DataFormat.Json,
                     paramsBody,
                     token);
