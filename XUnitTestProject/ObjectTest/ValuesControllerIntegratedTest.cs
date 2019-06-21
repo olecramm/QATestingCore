@@ -3,8 +3,8 @@ using Xunit;
 using QATestingCore.IntegratedTests.ActionsHandler;
 using QATestingCore.IntegratedTests.TestUtils;
 using QATestingCore.IntegratedTests.Assertions;
-using System.Net;
 using QATestingCore.IntegratedTests.Authentications;
+using System.Net;
 using XUnitTestProject.Models;
 
 namespace XUnitTestProject.ObjectTest
@@ -16,7 +16,7 @@ namespace XUnitTestProject.ObjectTest
         private static IHttpPostRequest _httpPostRequest;
         private static IHttpPutRequest _httpPutRequest;
         private static IHttpDelRequest _httpDelRequest;
-        private static IJWTAuthentication _oauthAuthentication;
+        private static IOAuthentication _oauthAuthentication;
         private string TestDataPath;
 
         public ValuesControllerIntegratedTest()
@@ -27,7 +27,7 @@ namespace XUnitTestProject.ObjectTest
             _httpPostRequest = new HttpPostRequest();
             _httpPutRequest = new HttpPutRequest();
             _httpDelRequest = new HttpDelRequest();
-            _oauthAuthentication = new JWTAuthentication();
+            _oauthAuthentication = new OAuthentication();
 
             TestDataPath = @"\TestsData\ValuesControllerTestsData.json";
         }
@@ -122,7 +122,7 @@ namespace XUnitTestProject.ObjectTest
 
             var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
 
-            var _jwtToken = _oauthAuthentication.GetOauthAuthentication(oauthURI, paramsBody);
+            var _jwtToken = _oauthAuthentication.BearerAuthentication(oauthURI, paramsBody);
 
             //Act   
             var response = _httpGetRequest.MakeGetRequest(testURI, HttpMethod.GET, _jwtToken);

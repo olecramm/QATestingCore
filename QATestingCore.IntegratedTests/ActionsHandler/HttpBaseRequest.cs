@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using QATestingCore.IntegratedTests.Authentications;
 using RestSharp;
 using System;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
                                HttpMethod EnumMethod,
                                DataFormat dataFormat,
                                JObject paramsBody = null,
-                               string token = null)
+                               HeaderAuthParams token = null)
         {
             RestClient = new RestClient(baseUrl);
 
@@ -47,7 +48,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
 
             if (token != null)
             {
-                RestRequest.AddHeader("Authentication", string.Format("Bearer {0}", token));
+                RestRequest.AddHeader(token.HeaderName, token.HearderValue);
             }
         }
 
