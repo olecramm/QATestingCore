@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using QATestingCore.IntegratedTests.Authentications;
+using RestSharp;
 using System;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
@@ -17,7 +18,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <returns>Return an IRestResponse object</returns>
         public IRestResponse MakeGetRequest(UriBuilder uriBuilder,
                                             HttpMethod method = HttpMethod.GET,
-                                            string token = null)
+                                            HeaderAuthParams token = null)
         {
             var baseUrl = AssembleBaseUrl(uriBuilder);
 

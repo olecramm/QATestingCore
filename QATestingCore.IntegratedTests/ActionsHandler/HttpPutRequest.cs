@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using QATestingCore.IntegratedTests.Authentications;
 using RestSharp;
 using System;
 
@@ -18,7 +19,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <returns>Return an IRestResponse object</returns>
         public IRestResponse MakePutRequest(UriBuilder uriBuilder,
                                             JObject paramsBody,
-                                            string token = null)
+                                            HeaderAuthParams token = null)
         {
             var baseUrl = AssembleBaseUrl(uriBuilder);
 

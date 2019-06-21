@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
+using QATestingCore.IntegratedTests.Authentications;
 using RestSharp;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
@@ -17,7 +18,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
         /// <returns>Return an IRestResponse object</returns>
         IRestResponse MakePostRequet(UriBuilder uriBuilder, 
-                                     JObject paramsBody, 
-                                     string token = null);
+                                     JObject paramsBody,
+                                     HeaderAuthParams token = null);
     }
 }

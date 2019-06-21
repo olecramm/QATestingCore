@@ -2,40 +2,37 @@
 using QATestingCore.IntegratedTests.ActionsHandler;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.Authentications
 {
     /// <summary>
-    /// Contains methods to beget token authentication as JWT security
+    /// Contains methods to beget token authentication in diferent types
     /// </summary>
-    public class JWTAuthentication : HttpBaseRequest, IJWTAuthentication
+    public class OAuthentication : HttpBaseRequest, IOAuthentication
     {
         private UriBuilder uriBuilder;
 
         /// <summary>
         /// Create the UriBuilder object in memory
         /// </summary>
-        public JWTAuthentication()
+        public OAuthentication()
         {
             uriBuilder = new UriBuilder();
         }
 
         /// <summary>
-        /// Generate oauth token through an authentication server asynchronously
+        /// Generate oauth token as bearer type through an authentication server asynchronously
         /// </summary>
         /// <param name="uriBuilder">Represents an object that contains client and request informations</param>
         /// <param name="paramsObj">Represents an objects with the parameters to be sent wrapped into the request</param>
-        /// <returns>Returns a token sent for the oauth authentication server</returns>
-        public string GetOauthAuthentication(UriBuilder uriBuilder, JObject paramsObj)
+        /// <returns>Returns an oauth token as Bearer type e.g.:"Bearer[tokenjwtkey"]</returns>
+        public HeaderAuthParams BearerAuthentication(UriBuilder uriBuilder, JObject paramsObj)
         {
             var baseUrl = AssembleBaseUrl(uriBuilder);
 
             Arrange(baseUrl,
                     uriBuilder.Uri.LocalPath,
-                    HttpMethod.GET,
+                    HttpMethod.POST,
                     DataFormat.Json,
                     paramsObj);
 
@@ -43,9 +40,12 @@ namespace QATestingCore.IntegratedTests.Authentications
 
             var accessToken = JObject.Parse(response.Content);
 
-            var token = accessToken.GetValue("access_token").ToString();
+            HeaderAuthParams headerAuthParams = new HeaderAuthParams() {
+                HeaderName = "Authentication",
+                HearderValue = string.Format("Bearer {0}", accessToken.GetValue("access_token").ToString())
+            };
 
-            return token;
+            return headerAuthParams;
         }
     }
 }
