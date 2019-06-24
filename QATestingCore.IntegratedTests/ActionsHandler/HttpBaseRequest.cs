@@ -2,6 +2,7 @@
 using QATestingCore.IntegratedTests.Authentications;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.ActionsHandler
@@ -29,13 +30,13 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <param name="EnumMethod">Represents the http verb that the call will execute on the endpoint</param>
         /// <param name="dataFormat">Represents the data type expected as response by the endipoint json or xml</param>
         /// <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request. Obs.:It is considered null value when it were omitted</param>
-        /// <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+        /// <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. Obs.:It is considered null value when it were omitted</param>
         protected void Arrange(string baseUrl,
                                string resourcePath,
                                HttpMethod EnumMethod,
                                DataFormat dataFormat,
                                JObject paramsBody = null,
-                               HeaderAuthParams token = null)
+                               IList<HeaderAuthParams> headerAuthParams = null)
         {
             RestClient = new RestClient(baseUrl);
 
@@ -46,9 +47,12 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
                 RestRequest.AddJsonBody(paramsBody);
             }
 
-            if (token != null)
+            if (headerAuthParams != null)
             {
-                RestRequest.AddHeader(token.HeaderName, token.HearderValue);
+                foreach (var item in headerAuthParams)
+                {
+                    RestRequest.AddHeader(item.HeaderName, item.HearderValue);
+                }
             }
         }
 
