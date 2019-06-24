@@ -48,9 +48,7 @@ namespace QATestingCore.IntegratedTests.Authentications
 
             var accessToken = JObject.Parse(response.Content);
 
-            headerAuthParams.Add(new HeaderAuthParams("Authentication",string.Format("Bearer {0}", accessToken.GetValue("access_token").ToString())));
-            headerAuthParams.Add(new HeaderAuthParams("Authentication2", string.Format("Bearer {0}", accessToken.GetValue("access_token").ToString())));
-            headerAuthParams.Add(new HeaderAuthParams(null, string.Format("Bearer {0}", accessToken.GetValue("access_token").ToString())));
+            headerAuthParams.Add(new HeaderAuthParams("Authentication", string.Format("Bearer {0}", accessToken.GetValue("access_token").ToString())));
 
             return headerAuthParams;
         }
