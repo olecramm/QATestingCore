@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace QATestingCore.IntegratedTests.Authentications
@@ -15,6 +16,6 @@ namespace QATestingCore.IntegratedTests.Authentications
         /// <param name="uriBuilder">Represents an object that contains client and request informations</param>
         /// <param name="paramsObj">Represents an objects with the parameters to be sent wrapped into the request</param>
         /// <returns>Returns a token sent for the oauth authentication server</returns>
-        HeaderAuthParams BearerAuthentication(UriBuilder uriBuilder, JObject paramsObj);
+        IList<HeaderAuthParams> BearerAuthentication(UriBuilder uriBuilder, JObject paramsObj);
     }
 }

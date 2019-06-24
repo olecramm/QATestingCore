@@ -19,7 +19,7 @@
             restRequest object of RestSharp library
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.Arrange(System.String,System.String,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,RestSharp.DataFormat,Newtonsoft.Json.Linq.JObject,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.Arrange(System.String,System.String,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,RestSharp.DataFormat,Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Arrange the request to call the endpoint
             </summary>
@@ -28,7 +28,7 @@
             <param name="EnumMethod">Represents the http verb that the call will execute on the endpoint</param>
             <param name="dataFormat">Represents the data type expected as response by the endipoint json or xml</param>
             <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request. Obs.:It is considered null value when it were omitted</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. Obs.:It is considered null value when it were omitted</param>
         </member>
         <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest.Act">
             <summary>
@@ -54,13 +54,13 @@
             Contains method to beget call to the endpoint as Http action DEL
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpDelRequest.MakeDeleteRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpDelRequest.MakeDeleteRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Delete request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. Obs.:It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.HttpGetRequest">
@@ -68,13 +68,13 @@
             Contains method to beget call to the endpoint as Http action GET
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpGetRequest.MakeGetRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpGetRequest.MakeGetRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Get request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.HttpMethod">
@@ -132,13 +132,13 @@
             Contains method to beget call to the endpoint as Http action POST
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPostRequest.MakePostRequet(System.UriBuilder,Newtonsoft.Json.Linq.JObject,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPostRequest.MakePostRequet(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Post request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.HttpPutRequest">
@@ -146,13 +146,13 @@
             Contains method to beget call to the endpoint as Http action PUT
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPutRequest.MakePutRequest(System.UriBuilder,Newtonsoft.Json.Linq.JObject,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.HttpPutRequest.MakePutRequest(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create PUT request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.IHttpDelRequest">
@@ -160,13 +160,13 @@
             Contains method to beget call to the endpoint as Http action DEL
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpDelRequest.MakeDeleteRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpDelRequest.MakeDeleteRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Delete request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.IHttpGetRequest">
@@ -174,13 +174,13 @@
             Contains method to beget call to the endpoint as Http action GET
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpGetRequest.MakeGetRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpGetRequest.MakeGetRequest(System.UriBuilder,QATestingCore.IntegratedTests.ActionsHandler.HttpMethod,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Get request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="method">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.IHttpPostRequest">
@@ -188,13 +188,13 @@
             Contains method to beget call to the endpoint as Http action POST
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpPostRequest.MakePostRequet(System.UriBuilder,Newtonsoft.Json.Linq.JObject,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpPostRequest.MakePostRequet(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create Post request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.IHttpPutRequest">
@@ -202,13 +202,13 @@
             Contains method to beget call to the endpoint as Http action PUT
             </summary>
         </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpPutRequest.MakePutRequest(System.UriBuilder,Newtonsoft.Json.Linq.JObject,QATestingCore.IntegratedTests.Authentications.HeaderAuthParams)">
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.IHttpPutRequest.MakePutRequest(System.UriBuilder,Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IList{QATestingCore.IntegratedTests.Authentications.HeaderAuthParams})">
             <summary>
             Create PUT request and execute the call to an endpoint
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="paramsBody">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <param name="token">Represents the key informed. Obs.:It is considered null value when it were omitted</param>
+            <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.Assertions.ResponseContentAssertions">
@@ -251,6 +251,28 @@
             <param name="expectedStatusCode">Represents the expected status code</param>
             <returns>Returns a boolean data to be asserted</returns>
         </member>
+        <member name="T:QATestingCore.IntegratedTests.Authentications.HeaderAuthParams">
+            <summary>
+            Contain the properties for the token authentication
+            </summary>
+        </member>
+        <member name="P:QATestingCore.IntegratedTests.Authentications.HeaderAuthParams.HeaderName">
+            <summary>
+            Represents the header name to be added into the request
+            </summary>
+        </member>
+        <member name="P:QATestingCore.IntegratedTests.Authentications.HeaderAuthParams.HearderValue">
+            <summary>
+            Represents the header value to be added into the request
+            </summary>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.Authentications.HeaderAuthParams.#ctor(System.String,System.String)">
+            <summary>
+            Represents the method to add a set of header into the request call
+            </summary>
+            <param name="headerName">Represents the header name to be added into the request</param>
+            <param name="headerValue">Represents the header value to be added into the request</param>
+        </member>
         <member name="T:QATestingCore.IntegratedTests.Authentications.IOAuthentication">
             <summary>
             Create the UriBuilder object in memory
@@ -269,6 +291,11 @@
             Contains methods to beget token authentication in diferent types
             </summary>
         </member>
+        <member name="F:QATestingCore.IntegratedTests.Authentications.OAuthentication.headerAuthParams">
+            <summary>
+            Represents a list of header parameters
+            </summary>
+        </member>
         <member name="M:QATestingCore.IntegratedTests.Authentications.OAuthentication.#ctor">
             <summary>
             Create the UriBuilder object in memory
@@ -280,7 +307,7 @@
             </summary>
             <param name="uriBuilder">Represents an object that contains client and request informations</param>
             <param name="paramsObj">Represents an objects with the parameters to be sent wrapped into the request</param>
-            <returns>Returns an oauth token as Bearer type e.g.:"Bearer[tokenjwtkey"]</returns>
+            <returns>Returns a list of parameters as Bearer type e.g.:"Bearer[tokenjwtkey"]</returns>
         </member>
         <member name="T:QATestingCore.IntegratedTests.Authentications.RSAAuthentication">
             <summary>
