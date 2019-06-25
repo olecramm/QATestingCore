@@ -9,30 +9,25 @@ using XUnitTestProject.Models;
 
 namespace XUnitTestProject.ObjectTest
 {
-    public class ValuesControllerIntegratedTest
+    public class ValuesControllerIntegratedTest : IClassFixture<DatabaseFixture>
     {
+        readonly DatabaseFixture fixture;
         private UriBuilder testURI;
-        private static IHttpGetRequest _httpGetRequest;
-        private static IHttpPostRequest _httpPostRequest;
-        private static IHttpPutRequest _httpPutRequest;
-        private static IHttpDelRequest _httpDelRequest;
-        private static IOAuthentication _oauthAuthentication;
+        private static IHttpGetRequest _httpGetRequest = new HttpGetRequest();
+        private static IHttpPostRequest _httpPostRequest = new HttpPostRequest();
+        private static IHttpPutRequest _httpPutRequest = new HttpPutRequest();
+        private static IHttpDelRequest _httpDelRequest = new HttpDelRequest();
+        private static IOAuthentication _oauthAuthentication = new OAuthentication();
         private string TestDataPath;
 
-        public ValuesControllerIntegratedTest()
+        public ValuesControllerIntegratedTest(DatabaseFixture fixture)
         {
+            this.fixture = fixture;
             testURI = new UriBuilder("http://localhost:3000");
-
-            _httpGetRequest = new HttpGetRequest();
-            _httpPostRequest = new HttpPostRequest();
-            _httpPutRequest = new HttpPutRequest();
-            _httpDelRequest = new HttpDelRequest();
-            _oauthAuthentication = new OAuthentication();
-
             TestDataPath = @"\TestsData\ValuesControllerTestsData.json";
         }
 
-        [Theory(Skip = "specific reason")]
+        [Theory]
         [InlineData("/30605678839/05?rlz=1C1SQJL_pt-BRBR809BR809&biw=1366&bih=625&tbm=isch", HttpStatusCode.OK)]
         public void TC_01_AssertActionGETApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
@@ -46,14 +41,14 @@ namespace XUnitTestProject.ObjectTest
             Assert.Equal(expectedResult, response.StatusCode);
         }
 
-        [Theory(Skip = "specific reason")]
-        [InlineData( "/Api/Value", HttpStatusCode.OK)]
-        public void TC_02_AssertActionPOSTApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
+        [Theory]
+        [InlineData("TESTE01", "/Api/Value", HttpStatusCode.OK)]
+        public void TC_02_AssertActionPOSTApiValuesByID_OK(string tesCaseName, string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
             testURI.Path = resourcePath;
-            
-            var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
+
+            var paramsBody = RetrieveTestData.GetRequestParameters(TestDataPath, tesCaseName);
 
             //Act
             var response = _httpPostRequest.MakePostRequet(testURI, paramsBody);
@@ -80,7 +75,7 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData( "/userinformation/101", HttpStatusCode.OK)]
+        [InlineData("/userinformation/101", HttpStatusCode.OK)]
         public void TC_04_AssertActionDELApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
@@ -110,13 +105,16 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData("/userinformation?userId=101", HttpStatusCode.OK)]
+        [InlineData("/userinformation?userId=101", HttpStatusCode.Created)]
         public void TC_06_AssertActionGETApiValuesByID_OK_WithToken(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
             testURI.Path = resourcePath;
 
-            UriBuilder oauthURI = new UriBuilder("http://localhost:3000") {
+            var endpoint = fixture.BaseEnvironmentObj["endpoints"]["service_1"].ToString();
+
+            UriBuilder oauthURI = new UriBuilder(endpoint)
+            {
                 Path = "/token"
             };
 
