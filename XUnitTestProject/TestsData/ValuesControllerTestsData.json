@@ -1,4 +1,4 @@
-{  
+{
   "TESTE01": {
     "parameterA": "01234",
     "parameterB": "01444",
@@ -18,5 +18,12 @@
     "parameterA": "01234",
     "parameterB": "01444",
     "parameterC": "01455"
+  },
+  "TESTE07": {
+    "id": 2,
+    "title": "Appiums",
+    "author": "karthik KK",
+    "salary": 5500.56,
+    "active": true
   }
 }

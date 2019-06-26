@@ -21,9 +21,17 @@ namespace QATestingCore.IntegratedTests.TestUtils
 
             string dataString = string.Empty;
 
-            using (StreamReader file = File.OpenText(baseDirectory))
+            try
             {
-                dataString = file.ReadToEnd();
+                using (StreamReader file = File.OpenText(baseDirectory))
+                {
+                    dataString = file.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Some went wrong to load the Json file. Please check the file's folder location at: " + baseDirectory);
             }
 
             return dataString;
@@ -40,31 +48,48 @@ namespace QATestingCore.IntegratedTests.TestUtils
 
             string dataString = string.Empty;
 
-            using (StreamReader file = File.OpenText(baseDirectory))
+            try
             {
-                dataString = file.ReadToEnd();
+                using (StreamReader file = File.OpenText(baseDirectory))
+                {
+                    dataString = file.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Some went wrong to load the Json file. Please check the file's folder location at: " + baseDirectory);
             }
 
             return JObject.Parse(dataString);
         }
 
         /// <summary>
-        /// Read data from file json and returns data object as Model Class
+        /// Read the entire data from file json and returns data object as Model Class
         /// </summary>
         /// <typeparam name="T">Represents the Model Class as type T</typeparam>
         /// <param name="filePath">Represents the value from the parameter where it is stowed Ex.: @"\folder\filename.json"</param>
-        /// <returns>Returns an object containing all data read from json file as Generics</returns>
+        /// <returns>Returns an Generic T object containing the entire data read from a json file</returns>
         public static T GetResourceAsGeneric<T>(string filePath)
         {
             T jsonObjectData = default(T);
 
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + filePath;
 
-            using (StreamReader file = File.OpenText(baseDirectory))
+            try
             {
-                JsonSerializer serializer = new JsonSerializer();
-                jsonObjectData = (T)serializer.Deserialize(file, typeof(T));
+                using (StreamReader file = File.OpenText(baseDirectory))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    jsonObjectData = (T)serializer.Deserialize(file, typeof(T));
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Some went wrong to load the Json file. Please check the file's folder location at: " + baseDirectory);
+            }
+
             return jsonObjectData;
         }
 
@@ -73,20 +98,31 @@ namespace QATestingCore.IntegratedTests.TestUtils
         /// </summary>
         /// <param name="filePath">Represents the value from the parameter where it is stowed Ex.: Ex.: @"\folder\filename.json"</param>
         /// <param name="jsonTokenName">Represents the name of the Json property ex.: "T01234"</param>
-        /// <returns>Returns an object containing only the  data read from json file</returns>
-        public static object GetRequestParameters<T>(string filePath, string jsonTokenName)
+        /// <returns>Returns an Generic T object only the data read from jTokenName of json file</returns>
+        public static T GetRequestParameters<T>(string filePath, string jsonTokenName)
         {
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + filePath;
             var jsonFile = string.Empty;
+            T paramsJsonObj = default(T);
 
-            using (var file = File.OpenText(baseDirectory))
+            try
             {
-                jsonFile = file.ReadToEnd();
+                using (var file = File.OpenText(baseDirectory))
+                {
+                    jsonFile = file.ReadToEnd();
+                }
+
+                paramsJsonObj = JObject.Parse(jsonFile)
+                                        .SelectToken(jsonTokenName)
+                                        .ToObject<T>();
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Some went wrong to load the Json file. Please check the file's folder location at at: " + baseDirectory);
             }
 
-            var paramsJsonObj = JObject.Parse(jsonFile)
-                                    .SelectToken(jsonTokenName)
-                                    .ToObject<T>();
             return paramsJsonObj;
         }
 
@@ -95,19 +131,29 @@ namespace QATestingCore.IntegratedTests.TestUtils
         /// </summary>
         /// <param name="filePath">Represents the value from the parameter where it is stowed Ex.: Ex.: @"\folder\filename.json"</param>
         /// <param name="jsonTokenName">Represents the name of the Json property ex.: "T01234"</param>
-        /// <returns>Returns an object containing only the  data read from json file</returns>
+        /// <returns>Returns an JObject containing only the data read from jTokenName of json file</returns>
         public static JObject GetRequestParameters(string filePath, string jsonTokenName)
         {
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + filePath;
             var jsonFile = string.Empty;
+            JObject paramsJsonObj = null;
 
-            using (var file = File.OpenText(baseDirectory))
+            try
             {
-                jsonFile = file.ReadToEnd();
+                using (var file = File.OpenText(baseDirectory))
+                {
+                    jsonFile = file.ReadToEnd();
+                }
+
+                paramsJsonObj = (JObject)JObject.Parse(jsonFile)
+                                        .SelectToken(jsonTokenName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Some went wrong to load the Json file. Please check the file's folder location at at: " + baseDirectory);
             }
 
-            var paramsJsonObj = (JObject)JObject.Parse(jsonFile)
-                                    .SelectToken(jsonTokenName);
             return paramsJsonObj;
         }
     }

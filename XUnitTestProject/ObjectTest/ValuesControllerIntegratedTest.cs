@@ -9,65 +9,64 @@ using XUnitTestProject.Models;
 
 namespace XUnitTestProject.ObjectTest
 {
-    public class ValuesControllerIntegratedTest : IClassFixture<DatabaseFixture>
+    public class ValuesControllerIntegratedTest : IClassFixture<ScenarioContext>
     {
-        readonly DatabaseFixture fixture;
-        private UriBuilder testURI;
+        readonly ScenarioContext scenerioContext;
+        private static UriBuilder uriBuilder;
         private static IHttpGetRequest _httpGetRequest = new HttpGetRequest();
         private static IHttpPostRequest _httpPostRequest = new HttpPostRequest();
         private static IHttpPutRequest _httpPutRequest = new HttpPutRequest();
         private static IHttpDelRequest _httpDelRequest = new HttpDelRequest();
         private static IOAuthentication _oauthAuthentication = new OAuthentication();
-        private string TestDataPath;
 
-        public ValuesControllerIntegratedTest(DatabaseFixture fixture)
+        public ValuesControllerIntegratedTest(ScenarioContext scenearioContext)
         {
-            this.fixture = fixture;
-            testURI = new UriBuilder("http://localhost:3000");
-            TestDataPath = @"\TestsData\ValuesControllerTestsData.json";
+            this.scenerioContext = scenearioContext;
+            uriBuilder = new UriBuilder(scenerioContext.BaseEnvironmentObj["endpoints"]["service_1"].ToString());
         }
+
 
         [Theory]
         [InlineData("/30605678839/05?rlz=1C1SQJL_pt-BRBR809BR809&biw=1366&bih=625&tbm=isch", HttpStatusCode.OK)]
         public void TC_01_AssertActionGETApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
             //Act   
-            var response = _httpGetRequest.MakeGetRequest(testURI);
+            var response = _httpGetRequest.MakeGetRequest(uriBuilder);
 
             //Assert
             Assert.Equal(expectedResult, response.StatusCode);
         }
 
         [Theory]
-        [InlineData("TESTE01", "/Api/Value", HttpStatusCode.OK)]
+        [InlineData("TESTE02", "/Api/Value", HttpStatusCode.Created)]
         public void TC_02_AssertActionPOSTApiValuesByID_OK(string tesCaseName, string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
-            var paramsBody = RetrieveTestData.GetRequestParameters(TestDataPath, tesCaseName);
+            var paramsBody = RetrieveTestData.GetRequestParameters(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
 
             //Act
-            var response = _httpPostRequest.MakePostRequet(testURI, paramsBody);
+            var response = _httpPostRequest.MakePostRequet(uriBuilder, paramsBody);
 
             //Assert
             Assert.Equal(expectedResult, response.StatusCode);
         }
 
         [Theory]
-        [InlineData("/userinformation/101", HttpStatusCode.OK)]
-        public void TC_03_AssertActionPUTApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
+        [InlineData("TESTE03", "/userinformation/101", HttpStatusCode.OK)]
+        public void TC_03_AssertActionPUTApiValuesByID_OK(string tesCaseName, string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
-            var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
+            var paramsBody = RetrieveTestData.GetRequestParameters(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
 
             //Act
-            var response = _httpPutRequest.MakePutRequest(testURI, paramsBody);
+            var response = _httpPutRequest.MakePutRequest(uriBuilder, paramsBody);
 
             //Assert
             var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
@@ -79,10 +78,10 @@ namespace XUnitTestProject.ObjectTest
         public void TC_04_AssertActionDELApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
             //Act   
-            var response = _httpDelRequest.MakeDeleteRequest(testURI);
+            var response = _httpDelRequest.MakeDeleteRequest(uriBuilder);
 
             //Assert
             var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
@@ -94,10 +93,10 @@ namespace XUnitTestProject.ObjectTest
         public void TC_05_AssertActionGETApiValuesByID_OK(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
             //Act   
-            var response = _httpGetRequest.MakeGetRequest(testURI);
+            var response = _httpGetRequest.MakeGetRequest(uriBuilder);
 
             //Assert
             var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
@@ -105,25 +104,23 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData("/userinformation?userId=101", HttpStatusCode.Created)]
+        [InlineData("/userinformation?userId=101", HttpStatusCode.OK)]
         public void TC_06_AssertActionGETApiValuesByID_OK_WithToken(string resourcePath, HttpStatusCode expectedResult)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
-            var endpoint = fixture.BaseEnvironmentObj["endpoints"]["service_1"].ToString();
-
-            UriBuilder oauthURI = new UriBuilder(endpoint)
+            UriBuilder oauthURI = new UriBuilder(scenerioContext.BaseEnvironmentObj["endpoints"]["service_2"].ToString())
             {
                 Path = "/token"
             };
 
-            var paramsBody = RetrieveTestData.GetResourceAsJObject(TestDataPath);
+            var paramsBody = RetrieveTestData.GetResourceAsJObject(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString());
 
             var _jwtToken = _oauthAuthentication.BearerAuthentication(oauthURI, paramsBody);
 
             //Act   
-            var response = _httpGetRequest.MakeGetRequest(testURI, HttpMethod.GET, _jwtToken);
+            var response = _httpGetRequest.MakeGetRequest(uriBuilder, HttpMethod.GET, _jwtToken);
 
             //Assert
             var result = StatusCodeAssertions.AssertStatusCode(response.StatusCode, expectedResult);
@@ -131,16 +128,17 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData("/TestingDictionaryAssert", @"\TestsData\ExpectedTestParameters.json")]
-        public void TC_07_AssertReturnedData(string resourcePath, string expectBodyParams)
+        [InlineData("TESTE07", "/TestingDictionaryAssert")]
+        public void TC_07_AssertReturnedData(string testCaseName, string resourcePath)
         {
             //Arrange
-            testURI.Path = resourcePath;
+            uriBuilder.Path = resourcePath;
 
-            var expectedObj = RetrieveTestData.GetResourceAsGeneric<ParamsBodyTest>(expectBodyParams);
+            var expectedObj = RetrieveTestData.GetRequestParameters<ParamsBodyTest>(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), 
+                                                                                    testCaseName);
 
             //Act
-            var response = _httpGetRequest.MakeGetRequest(testURI, HttpMethod.GET);
+            var response = _httpGetRequest.MakeGetRequest(uriBuilder, HttpMethod.GET);
 
             //Assert
             ResponseContentAssertions.AssertResponseDataObject<ParamsBodyTest>(response, expectedObj);

@@ -7,7 +7,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
     /// <summary>
     /// Contains method to load the testdata only once and make it available along all test's suit
     /// </summary>
-    public class DatabaseFixture : IDisposable
+    public class ScenarioContext : IDisposable
     {
         /// <summary>
         /// Test data Object 
@@ -17,7 +17,7 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
         /// <summary>
         /// Constructor that loads the "BaseEnvironment.json" parameters
         /// </summary>
-        public DatabaseFixture()
+        public ScenarioContext()
         {
             try
             {
@@ -25,7 +25,8 @@ namespace QATestingCore.IntegratedTests.ActionsHandler
             }
             catch (System.Exception e)
             {
-                throw new System.Exception(e.Message);
+                Console.WriteLine("Some is wrong with the BaseEnvironment.json file. It must be present on root of the test project");
+                throw new System.Exception(e.Message);                
             }
         }
 

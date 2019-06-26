@@ -4,26 +4,6 @@
         <name>QATestingCore.IntegratedTests</name>
     </assembly>
     <members>
-        <member name="T:QATestingCore.IntegratedTests.ActionsHandler.DatabaseFixture">
-            <summary>
-            Contains method to load the testdata only once and make it available along all test's suit
-            </summary>
-        </member>
-        <member name="P:QATestingCore.IntegratedTests.ActionsHandler.DatabaseFixture.BaseEnvironmentObj">
-            <summary>
-            Test data Object 
-            </summary>
-        </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.DatabaseFixture.#ctor">
-            <summary>
-            Constructor that loads the "BaseEnvironment.json" parameters
-            </summary>
-        </member>
-        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.DatabaseFixture.Dispose">
-            <summary>
-            Dispose memory after all tests execution
-            </summary>
-        </member>
         <member name="T:QATestingCore.IntegratedTests.ActionsHandler.HttpBaseRequest">
             <summary>
             Contains methods that assembles client and request to call endpoints
@@ -231,6 +211,26 @@
             <param name="headerAuthParams">Represents a list of header parameters to be wrapped into the request call. It is considered null value when it were omitted</param>
             <returns>Return an IRestResponse object</returns>
         </member>
+        <member name="T:QATestingCore.IntegratedTests.ActionsHandler.ScenarioContext">
+            <summary>
+            Contains method to load the testdata only once and make it available along all test's suit
+            </summary>
+        </member>
+        <member name="P:QATestingCore.IntegratedTests.ActionsHandler.ScenarioContext.BaseEnvironmentObj">
+            <summary>
+            Test data Object 
+            </summary>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.ScenarioContext.#ctor">
+            <summary>
+            Constructor that loads the "BaseEnvironment.json" parameters
+            </summary>
+        </member>
+        <member name="M:QATestingCore.IntegratedTests.ActionsHandler.ScenarioContext.Dispose">
+            <summary>
+            Dispose memory after all tests execution
+            </summary>
+        </member>
         <member name="T:QATestingCore.IntegratedTests.Assertions.ResponseContentAssertions">
             <summary>
             Contain method to assert json shema comparing actual object to expected object schema
@@ -355,11 +355,11 @@
         </member>
         <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetResourceAsGeneric``1(System.String)">
             <summary>
-            Read data from file json and returns data object as Model Class
+            Read the entire data from file json and returns data object as Model Class
             </summary>
             <typeparam name="T">Represents the Model Class as type T</typeparam>
             <param name="filePath">Represents the value from the parameter where it is stowed Ex.: @"\folder\filename.json"</param>
-            <returns>Returns an object containing all data read from json file as Generics</returns>
+            <returns>Returns an Generic T object containing the entire data read from a json file</returns>
         </member>
         <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetRequestParameters``1(System.String,System.String)">
             <summary>
@@ -367,7 +367,7 @@
             </summary>
             <param name="filePath">Represents the value from the parameter where it is stowed Ex.: Ex.: @"\folder\filename.json"</param>
             <param name="jsonTokenName">Represents the name of the Json property ex.: "T01234"</param>
-            <returns>Returns an object containing only the  data read from json file</returns>
+            <returns>Returns an Generic T object only the data read from jTokenName of json file</returns>
         </member>
         <member name="M:QATestingCore.IntegratedTests.TestUtils.RetrieveTestData.GetRequestParameters(System.String,System.String)">
             <summary>
@@ -375,7 +375,7 @@
             </summary>
             <param name="filePath">Represents the value from the parameter where it is stowed Ex.: Ex.: @"\folder\filename.json"</param>
             <param name="jsonTokenName">Represents the name of the Json property ex.: "T01234"</param>
-            <returns>Returns an object containing only the  data read from json file</returns>
+            <returns>Returns an JObject containing only the data read from jTokenName of json file</returns>
         </member>
     </members>
 </doc>

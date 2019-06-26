@@ -1,8 +1,11 @@
 {
   "endpoints": {
     "service_1": "http://localhost:3000",
-    "service_2": "http://localhost:8080",
+    "service_2": "http://localhost:3000",
     "service_3": "http://localhost:8085"
+  },
+  "testDataPath": {
+    "filePath": "\\TestsData\\ValuesControllerTestsData.json"
   },
   "common-auth": {
     "jwtParams": {
