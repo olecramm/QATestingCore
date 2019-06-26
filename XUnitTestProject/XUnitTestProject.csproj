@@ -11,11 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestsData\BaseEnvironment.json" />
     <None Remove="TestsData\ExpectedTestParameters.json" />
     <None Remove="TestsData\ValuesControllerTestsData.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="BaseEnvironment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestsData\ExpectedTestParameters.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
