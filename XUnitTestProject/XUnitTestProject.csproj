@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <None Remove="TestsData\BaseEnvironment.json" />
-    <None Remove="TestsData\ExpectedTestParameters.json" />
+    <None Remove="TestsData\ParamsBodyJsonSchema.json" />
     <None Remove="TestsData\ValuesControllerTestsData.json" />
   </ItemGroup>
 
@@ -20,7 +20,7 @@
     <Content Include="BaseEnvironment.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestsData\ExpectedTestParameters.json">
+    <Content Include="TestsData\ParamsBodyJsonSchema.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestsData\ValuesControllerTestsData.json">
