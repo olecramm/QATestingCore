@@ -3,12 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Set of good practices for testing, initialy with integration test, however intending to progreed to other type of tests. In order to handle with this first version Lib, please ckeck the wiki on https://github.com/olecramm/QATestingCore/wiki</Description>
+    <Authors>QualityAssuranceTeam</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\source\QATestingCore\QATestingCore\QATestingCore.IntegratedTests\QATestingCore.IntegratedTests.xml</DocumentationFile>
-    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\netcoreapp2.2\QATestingCore.IntegratedTests.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp2.2</OutputPath>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.2\QATestingCore.IntegratedTests.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp2.2</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
