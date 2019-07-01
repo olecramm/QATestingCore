@@ -18,10 +18,9 @@ namespace QATestingCore.IntegratedTests.Assertions
         /// <returns>Returns a boolean value to be asserted True=success or an exception will return</returns>
         public static bool AssertResponseDataObject<T>(IRestResponse response, T expectedResult)
         {
-            var result = JObject.Parse(response.Content).ToObject<T>();
-
             try
             {
+                var result = JObject.Parse(response.Content).ToObject<T>();
                 result.Should().BeEquivalentTo<T>(expectedResult);
             }
             catch (System.Exception e)
