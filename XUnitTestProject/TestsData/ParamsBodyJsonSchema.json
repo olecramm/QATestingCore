@@ -1,0 +1,61 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": "integer",
+      "title": "The Id Schema",
+      "default": 0,
+      "required": true,
+      "examples": [
+        2
+      ]
+    },
+    "title": {
+      "$id": "#/properties/title",
+      "type": "string",
+      "title": "The Title Schema",
+      "default": "",
+      "required": true,
+      "examples": [
+        "Appiums"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "author": {
+      "$id": "#/properties/author",
+      "type": "string",
+      "title": "The Author Schema",
+      "default": "",
+      "required": true,
+      "examples": [
+        "karthik KK"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "salary": {
+      "$id": "#/properties/salary",
+      "type": "number",
+      "title": "The Salary Schema",
+      "default": 0.0,
+      "required": true,
+      "examples": [
+        5500.56
+      ]
+    },
+    "active": {
+      "$id": "#/properties/active",
+      "type": "boolean",
+      "title": "The Active Schema",
+      "default": false,
+      "required": true,
+      "examples": [
+        true
+      ]
+    }
+  }
+}

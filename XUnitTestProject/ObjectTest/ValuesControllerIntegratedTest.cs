@@ -11,7 +11,7 @@ namespace XUnitTestProject.ObjectTest
 {
     public class ValuesControllerIntegratedTest : IClassFixture<ScenarioContext>
     {
-        readonly ScenarioContext scenerioContext;
+        readonly ScenarioContext scenarioContext;
         private static UriBuilder uriBuilder;
         private static IHttpGetRequest _httpGetRequest = new HttpGetRequest();
         private static IHttpPostRequest _httpPostRequest = new HttpPostRequest();
@@ -19,10 +19,10 @@ namespace XUnitTestProject.ObjectTest
         private static IHttpDelRequest _httpDelRequest = new HttpDelRequest();
         private static IOAuthentication _oauthAuthentication = new OAuthentication();
 
-        public ValuesControllerIntegratedTest(ScenarioContext scenearioContext)
+        public ValuesControllerIntegratedTest(ScenarioContext scenarioContext)
         {
-            this.scenerioContext = scenearioContext;
-            uriBuilder = new UriBuilder(scenerioContext.BaseEnvironmentObj["endpoints"]["service_1"].ToString());
+            this.scenarioContext = scenarioContext;
+            uriBuilder = new UriBuilder(this.scenarioContext.BaseEnvironmentObj["endpoints"]["service_1"].ToString());
         }
 
 
@@ -47,7 +47,7 @@ namespace XUnitTestProject.ObjectTest
             //Arrange
             uriBuilder.Path = resourcePath;
 
-            var paramsBody = RetrieveTestData.GetRequestParameters(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
+            var paramsBody = RetrieveTestData.GetRequestParameters(scenarioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
 
             //Act
             var response = _httpPostRequest.MakePostRequet(uriBuilder, paramsBody);
@@ -63,7 +63,7 @@ namespace XUnitTestProject.ObjectTest
             //Arrange
             uriBuilder.Path = resourcePath;
 
-            var paramsBody = RetrieveTestData.GetRequestParameters(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
+            var paramsBody = RetrieveTestData.GetRequestParameters(scenarioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), tesCaseName);
 
             //Act
             var response = _httpPutRequest.MakePutRequest(uriBuilder, paramsBody);
@@ -110,12 +110,12 @@ namespace XUnitTestProject.ObjectTest
             //Arrange
             uriBuilder.Path = resourcePath;
 
-            UriBuilder oauthURI = new UriBuilder(scenerioContext.BaseEnvironmentObj["endpoints"]["service_2"].ToString())
+            UriBuilder oauthURI = new UriBuilder(scenarioContext.BaseEnvironmentObj["endpoints"]["service_2"].ToString())
             {
                 Path = "/token"
             };
 
-            var paramsBody = RetrieveTestData.GetResourceAsJObject(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString());
+            var paramsBody = RetrieveTestData.GetResourceAsJObject(scenarioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString());
 
             var _jwtToken = _oauthAuthentication.BearerAuthentication(oauthURI, paramsBody);
 
@@ -128,20 +128,38 @@ namespace XUnitTestProject.ObjectTest
         }
 
         [Theory]
-        [InlineData("TESTE07", "/TestingDictionaryAssert")]
+        [InlineData("TESTE07[0].expectedResult", "/TestingDictionaryAssert")]
         public void TC_07_AssertReturnedData(string testCaseName, string resourcePath)
         {
             //Arrange
             uriBuilder.Path = resourcePath;
 
-            var expectedObj = RetrieveTestData.GetRequestParameters<ParamsBodyTest>(scenerioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), 
+            var expectedObj = RetrieveTestData.GetRequestParameters<ParamsBodyTest>(scenarioContext.BaseEnvironmentObj["testDataPath"]["filePath"].ToString(), 
                                                                                     testCaseName);
 
             //Act
             var response = _httpGetRequest.MakeGetRequest(uriBuilder, HttpMethod.GET);
 
             //Assert
-            ResponseContentAssertions.AssertResponseDataObject<ParamsBodyTest>(response, expectedObj);
+            var result = ResponseContentAssertions.AssertResponseDataObject<ParamsBodyTest>(response, expectedObj);
+            Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("TESTE08", "/TestingDictionaryAssert", @"\TestsData\ParamsBodyJsonSchema.json")]
+        public void TC_08_AssertJsonSchema(string testCaseName, string resourcePath, string schemaFilePath)
+        {
+            //Arrange
+            uriBuilder.Path = resourcePath;
+
+            var schemaString = RetrieveTestData.GetResourceAsString(schemaFilePath);
+
+            //Act
+            var response = _httpGetRequest.MakeGetRequest(uriBuilder);
+
+            //Assert
+            var result = SchemaAssertions.ValidateJsonSchema(schemaString, response);
+            Assert.True(result);
         }
     }
 }
